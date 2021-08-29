@@ -54,7 +54,7 @@ public class Sol1 {
         String ret;
         switch (n) {
             case 0:
-                ret = "";
+                ret = null;
                 break;
             case 1:
                 ret = "One";
@@ -98,17 +98,17 @@ public class Sol1 {
      * @return
      */
     String threeWord(int h, int t, int o, String prefix) {
-        String ret = "";
+        String ret = null;
         String tens;
         String ones = oneWord(o);
 
         switch (t) {
             case 0: 
-                tens = "";
+                tens = null;
                 break;
             case 1:
                 tens = tensWord(o);
-                ones = "";
+                ones = null;
                 break;
             case 2:
                 tens = "Twenty";
@@ -142,10 +142,10 @@ public class Sol1 {
         if (h > 0) {
             ret = hundreds + " " + prefix + " " + tens + " " + ones;
         } else {
-            if(ones == ""){
+            if(ones == null){
                 ret = tens;
             }else{
-                if(tens ==""){
+                if(tens == null){
                     ret = ones;
                 }
                 else{
@@ -183,9 +183,9 @@ public class Sol1 {
             old = n % total;
             total = total * 10;
         }
-        String r4 = "";
-        String r3 = "";
-        String r2 = "";
+        String r4 = null;
+        String r3 = null;
+        String r2 = null;
         String r1 = threeWord(arr[3], arr[2], arr[1], "Hundred");
         if (arr[10] > 0) {
             r4 = oneWord(arr[10]);
@@ -197,22 +197,22 @@ public class Sol1 {
             r3 = threeWord(arr[9], arr[8], arr[7], "Hundred");
         }
         Boolean guard = true;
-        if(r4 !=""){
+        if(r4 !=null){
             ret = r4+" Billion "+r3+" Million "+r2+" Thousand "+r1;
             guard = false;
         }
-        if (r3 != "" && guard) {
-            if(r2 !=""){
+        if (r3 != null && guard) {
+            if(r2 !=null){
                 ret = (r3 + " Million " + r2 + " Thousand " + r1);
             }else{
             ret = r3+" Million "+r1;
             }
             guard = false;
         }
-        if (r2 != "" && guard) {
+        if (r2 != null && guard) {
             ret = (r2 + " Thousand " + r1);
         }
-        if (r3 == "" && r2 == "") {
+        if (r3 == null && r2 == null) {
             ret = r1;
         }
         System.out.println(ret);
@@ -222,7 +222,7 @@ public class Sol1 {
     public static void main(String args[]) {
         Sol1 s = new Sol1();
        // s.numberToWords(12345);
-        //System.out.println(s.threeWord(0, 1, 2,""));
+        //System.out.println(s.threeWord(0, 1, 2,null));
         System.out.println(s.numberToWords(1000000)); 
         
     }
