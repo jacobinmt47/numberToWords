@@ -54,7 +54,7 @@ public class Sol1 {
         String ret;
         switch (n) {
             case 0:
-                ret = null;
+                ret = "";
                 break;
             case 1:
                 ret = "One";
@@ -103,12 +103,12 @@ public class Sol1 {
         String ones = oneWord(o);
 
         switch (t) {
-            case 0: 
-                tens = null;
+            case 0:
+                tens = "";
                 break;
             case 1:
                 tens = tensWord(o);
-                ones = null;
+                ones = "";
                 break;
             case 2:
                 tens = "Twenty";
@@ -139,21 +139,28 @@ public class Sol1 {
                 break;
         }
         String hundreds = oneWord(h);
-        if (h > 0) {
+        if (hundreds != "" && tens != "" && ones != "") {
             ret = hundreds + " " + prefix + " " + tens + " " + ones;
         } else {
-            if(ones == null){
-                ret = tens;
-            }else{
-                if(tens == null){
-                    ret = ones;
+            if (hundreds == "" && tens == "" && ones == "") {
+                ret = "";
+            } else {
+                if (ones == "" && tens == "") {
+                    ret = hundreds + " " + prefix;
+                } else {
+                    if (ones == "") {
+                        ret = tens;
+                    } else {
+                        if (tens == "") {
+                            ret = ones;
+                        } else {
+                            ret = tens + " " + ones;
+                        }
+                    }
                 }
-                else{
-                ret = tens +" "+ones;
             }
-           }
         }
-            
+
         return ret;
     }
 
@@ -170,7 +177,7 @@ public class Sol1 {
         int old = 1;
         String ret = "blank";
         Boolean smaller = true;
-        for (int i = 0; (i < 10) && smaller; i++) {
+        for (int i = 0; (i < 11) && smaller; i++) {
             // System.out.println(n % total);
             smaller = !(n % total == n);
             if (total > 10) {
@@ -197,33 +204,38 @@ public class Sol1 {
             r3 = threeWord(arr[9], arr[8], arr[7], "Hundred");
         }
         Boolean guard = true;
-        if(r4 !=null){
-            ret = r4+" Billion "+r3+" Million "+r2+" Thousand "+r1;
+        if (r4 != null) {
+            ret = r4 + " Billion " + r3 + " Million " + r2 + " Thousand " + r1;
             guard = false;
         }
-        if (r3 != null && guard) {
-            if(r2 !=null){
+        if (r3 != "" && guard) {
+            if (r2 != null) {
                 ret = (r3 + " Million " + r2 + " Thousand " + r1);
-            }else{
-            ret = r3+" Million "+r1;
+            } else {
+                if (r1 != "") {
+                    ret = r3 + " Million " + r1;
+                } else {
+                    ret = r3 + " Million";
+                }
             }
             guard = false;
         }
         if (r2 != null && guard) {
-            ret = (r2 + " Thousand " + r1);
+            if (r1 != null) {
+                ret = (r2 + " Thousand " + r1);
+            } else {
+                ret = r2 + " Thousand";
+            }
         }
         if (r3 == null && r2 == null) {
             ret = r1;
         }
-        System.out.println(ret);
         return ret;
     }
 
     public static void main(String args[]) {
         Sol1 s = new Sol1();
-       // s.numberToWords(12345);
-        //System.out.println(s.threeWord(0, 1, 2,null));
-        System.out.println(s.numberToWords(1000000)); 
-        
+        System.out.println(s.threeWord(0, 0, 0, "Hundred"));
+        System.out.println(s.numberToWords(100000000));
     }
 }
