@@ -1,14 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package sol;
-
-/**
- *
- * @author jacob
- */
 public class Sol1 {
 
     String tensWord(int n) {
@@ -98,7 +88,7 @@ public class Sol1 {
      * @return
      */
     String threeWord(int h, int t, int o, String prefix) {
-        String ret = null;
+        String ret = "";
         String tens;
         String ones = oneWord(o);
 
@@ -148,13 +138,20 @@ public class Sol1 {
                 if (ones == "" && tens == "") {
                     ret = hundreds + " " + prefix;
                 } else {
-                    if (ones == "") {
-                        ret = tens;
+                    if (ones == "" && hundreds !="" && tens !="") {
+                        ret = hundreds+" "+prefix+" "+tens;
                     } else {
-                        if (tens == "") {
+                        if (hundreds =="" &&tens == "") {
                             ret = ones;
-                        } else {
-                            ret = tens + " " + ones;
+                        } 
+                        else{
+                            if(hundreds =="" && ones ==""){
+                                ret = tens;
+                            }else{
+                                if(tens!="" && ones!=""){
+                                ret = tens+" "+ones;
+                            }
+                            }
                         }
                     }
                 }
@@ -175,12 +172,13 @@ public class Sol1 {
         int total = 1;
         int d = 1;
         int old = 1;
+        Boolean guard = true;
         String ret = "blank";
         Boolean smaller = true;
         for (int i = 0; (i < 11) && smaller; i++) {
             // System.out.println(n % total);
             smaller = !(n % total == n);
-            if (total > 10) {
+            if (total > 11) {
                 d = ((n % total - old) / (total / 10));
             } else {
                 d = n % total;
@@ -190,44 +188,61 @@ public class Sol1 {
             old = n % total;
             total = total * 10;
         }
-        String r4 = null;
-        String r3 = null;
-        String r2 = null;
-        String r1 = threeWord(arr[3], arr[2], arr[1], "Hundred");
-        if (arr[10] > 0) {
-            r4 = oneWord(arr[10]);
+        String r4 = "";
+        String r3 = "";
+        String r2 = "";
+        if(n>999999999){
+            if(n>=2000000000){ // max is 2 rasiedTo 31 -1
+                if(n ==2000000000){
+                    ret ="Two Billion";
+                }else{
+                    ret = "Two Billion "+numberToWords(n-2000000000);
+                }
+            }else{
+                if(n == 1000000000){
+                    ret ="One Billion";
+                }else{
+             ret = "One Billion "+numberToWords(n-1000000000);
+                }
+            }
+            guard = false;
         }
+        if(n ==0){
+            ret = "Zero";
+            guard = false;
+        }
+        String r1 = threeWord(arr[3], arr[2], arr[1], "Hundred");
         if ((arr[6] > 0) || (arr[5] > 0) || (arr[4] > 0)) {
             r2 = threeWord(arr[6], arr[5], arr[4], "Hundred");
         }
         if (arr[9] > 0 || arr[8] > 0 || arr[7] > 0) {
             r3 = threeWord(arr[9], arr[8], arr[7], "Hundred");
         }
-        Boolean guard = true;
-        if (r4 != null) {
-            ret = r4 + " Billion " + r3 + " Million " + r2 + " Thousand " + r1;
-            guard = false;
-        }
+        
         if (r3 != "" && guard) {
-            if (r2 != null) {
-                ret = (r3 + " Million " + r2 + " Thousand " + r1);
+            if (r2 == "" && r1 == "") {
+                ret = r3 + " Million";
             } else {
-                if (r1 != "") {
+                if (r2 == "") {
                     ret = r3 + " Million " + r1;
                 } else {
-                    ret = r3 + " Million";
+                    if (r1 == "") {
+                        ret = r3 + " Million " + r2 + " Thousand";
+                    } else {
+                        ret = r3 + " Million " + r2 + " Thousand " + r1;
+                    }
                 }
             }
             guard = false;
         }
-        if (r2 != null && guard) {
-            if (r1 != null) {
+        if (r2 != "" && guard) {
+            if (r1 != "") {
                 ret = (r2 + " Thousand " + r1);
             } else {
                 ret = r2 + " Thousand";
             }
         }
-        if (r3 == null && r2 == null) {
+        if (r3 == "" && r2 == "" && guard) {
             ret = r1;
         }
         return ret;
@@ -235,7 +250,8 @@ public class Sol1 {
 
     public static void main(String args[]) {
         Sol1 s = new Sol1();
-        System.out.println(s.threeWord(0, 0, 0, "Hundred"));
-        System.out.println(s.numberToWords(100000000));
+        //System.out.println(s.numberToWords(12345));
+        System.out.println(s.threeWord(1, 2, 1, "Hundred"));
+        System.out.println(s.threeWord(1, 0, 1, "Hundred"));
     }
 }
