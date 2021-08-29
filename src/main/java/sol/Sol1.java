@@ -129,35 +129,48 @@ public class Sol1 {
                 break;
         }
         String hundreds = oneWord(h);
-        if (hundreds != "" && tens != "" && ones != "") {
-            ret = hundreds + " " + prefix + " " + tens + " " + ones;
-        } else {
-            if (hundreds == "" && tens == "" && ones == "") {
-                ret = "";
-            } else {
-                if (ones == "" && tens == "") {
-                    ret = hundreds + " " + prefix;
-                } else {
-                    if (ones == "" && hundreds !="" && tens !="") {
-                        ret = hundreds+" "+prefix+" "+tens;
-                    } else {
-                        if (hundreds =="" &&tens == "") {
-                            ret = ones;
-                        } 
-                        else{
-                            if(hundreds =="" && ones ==""){
-                                ret = tens;
-                            }else{
-                                if(tens!="" && ones!=""){
-                                ret = tens+" "+ones;
-                            }
-                            }
-                        }
-                    }
-                }
-            }
+        int bh,bt,bo;
+        bh =0;
+        bt =0;
+        bo =0;
+        if(hundreds !=""){
+            bh = 4;
         }
-
+        if(tens !=""){
+            bt = 2;
+        }
+        if(ones !=""){
+            bo =1;
+        }
+        int sum = bh|bt|bo;
+        switch(sum){
+            case 0:
+                ret = "";
+                break;
+            case 1:
+                ret = ones;
+                break;
+            case 2:
+                ret = tens;
+                break;
+            case 3:
+                ret = tens+" "+ones;
+                break;
+            case 4:
+                ret = hundreds+" "+prefix;
+                break;
+            case 5:
+                ret = hundreds+" "+prefix+" "+ones;
+                break;
+            case 6:
+                ret = hundreds+" "+prefix+" "+tens;
+                break;
+            case 7:
+                ret = hundreds+" "+prefix+" "+tens+" "+ones;
+                break;
+            default:
+                ret = "ERROR";
+        }
         return ret;
     }
 
@@ -250,8 +263,10 @@ public class Sol1 {
 
     public static void main(String args[]) {
         Sol1 s = new Sol1();
-        //System.out.println(s.numberToWords(12345));
-        System.out.println(s.threeWord(1, 2, 1, "Hundred"));
-        System.out.println(s.threeWord(1, 0, 1, "Hundred"));
+        for (int i = 0; i < 1000;i++){
+            String r = s.numberToWords(i);
+            System.out.println(r);
+            
+        }
     }
 }
