@@ -145,8 +145,13 @@ public class Sol1 {
             if(ones == ""){
                 ret = tens;
             }else{
+                if(tens ==""){
+                    ret = ones;
+                }
+                else{
                 ret = tens +" "+ones;
             }
+           }
         }
             
         return ret;
@@ -216,9 +221,9 @@ public class Sol1 {
 
     public static void main(String args[]) {
         Sol1 s = new Sol1();
-        s.numberToWords(12345);
-        System.out.println(s.threeWord(0, 1, 2,""));
-        
+       // s.numberToWords(12345);
+        //System.out.println(s.threeWord(0, 1, 2,""));
+        System.out.println(s.numberToWords(1000000)); 
         
     }
 }
