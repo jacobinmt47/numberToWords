@@ -46,12 +46,25 @@ public class Sol1Test {
         System.out.println("intToWord");
         int n = 1000;
         Sol1 instance = new Sol1();
-        String expResult = "one thousand";
-        String result = instance.intToWord(n);
+        String expResult = "One Thousand";
+        String result = instance.numberToWords(n);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+    }
+    @org.junit.jupiter.api.Test
+    public void testThousands(){
+        int n1 = 1000000;
+        int n2 = 12345;
+        int n3 = 21000;
+        Sol1 instance = new Sol1();
+        assertEquals("One Million",instance.numberToWords(n1));
+        assertEquals("Twelve Thousand Three Hundred Forty Five",instance.numberToWords(n2));
+        assertEquals("Twenty One Thousand",instance.numberToWords(n3));
     }
 
-   
+    @org.junit.jupiter.api.Test
+    public void testBillion(){
+        Sol1 s = new Sol1();
+        assertEquals("One Billion",s.numberToWords(1000000000));
+    }
 }
